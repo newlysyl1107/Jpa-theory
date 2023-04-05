@@ -8,6 +8,8 @@ import javax.persistence.Id;
 @Entity
 public class Member {
 
+    // @Entity 는 기본 생성자가 필수
+    // 파라미터가 없는 public 또는 protected 생성자
     public Member() {
 
     }

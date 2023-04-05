@@ -12,7 +12,8 @@ public class JpaMain {
         // 엔티티 매니저 팩토리 생성
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("hello");
 
-        // 엔티티 매니저 생성
+        // 엔티티 매니저 생성 (엔티티 매니저를 통해 영속성 컨텍스트에 접근)
+        // 엔티티 매니저와 영속성 컨텍스트는 1:1관계
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         // 트랜잭션 시작
@@ -96,6 +97,20 @@ public class JpaMain {
             // setter 를 통해 원하는 값으로 변경한 다음에
             // entityManager.persist 를 써야하는가 ? -> X
             // 그냥 값을 변경한 뒤 commit(); 만 해주면 됨!
+
+
+            // flush()
+            // 영속성 컨텍스트의 내용을 DB에 반영한다는 뜻
+            // 플러쉬는 이럴 때 호출된다.
+            // (직접 호출) entityManager.flush(); 하거나
+            // 트랜잭션이 커밋될 때 자동으로 flush 되며
+            // JPQL쿼리가 실행될 때 자동으로 flush 된다.
+            // 그 중에서 직접 호출하여 flush 하는 경우는
+            // 예를 들어 insert 쿼리를 commit 하기 전에 보고 싶은 경우
+            // commit 전에 entityManager.flush(); 하면 볼 수 있다.
+            // 또한 플러시를 한다고 해서 영속성 컨텍스트와 1차캐시의 내용이 지워지지는 않는다.
+            // 한 마디로 영속성 컨텍스트의 내용을 DB 와 동기화 하는 작업이 flush
+
 
             // 트랜잭션 저장
             entityTransaction.commit();
